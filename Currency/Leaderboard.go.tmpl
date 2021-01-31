@@ -1,0 +1,54 @@
+{{/*
+    Name: Top Hunter Leaderboard
+    Author: Dr. Hyakkimaru#6020
+    Usage: `-tophunter (page)`
+    Trigger Type: Regex
+    Trigger: `\A\-(?i)l(eader)?b(oard)?`
+*/}}
+
+
+{{/* CONFIGURATION VARIABLES */}}
+{{ $dbName := "CREDITS" }} {{/* Name of the Key of your DB that stores users currency amount */}}
+{{/* CONFIGURATION VARIABLES END */}}
+
+
+{{/* Do not change anything below */}}	
+{{$key := joinStr "" "hunter_tracker_"  .User.ID}}
+{{dbSet 68 $key (dbGet .User.ID $dbName).Value}}
+
+{{$page := 1}}{{$id := 0}}
+{{if .CmdArgs}}
+{{$page = toInt (index .CmdArgs 0)}}
+{{if lt $page 1}} {{$page = 1}} {{end}} {{end}} 
+
+{{with .ExecData}}
+{{$page = .page}} {{$id = .id}}
+{{end}}
+
+{{$hunter := " "}} {{$wallet := " " }} {{$fields := cslice}}
+{{$num_per_page := 10}}
+{{$skip := mult (sub $page 1) $num_per_page}}
+{{$text := ""}} {{$count := add $skip 1}}
+{{range (dbTopEntries `hunter\_tracker\_%` 10 $skip)}}
+{{$member := getMember (toInt (index (split .Key "_") 2))}}
+{{if $member}}
+{{ $hunter = printf "#%-4d %-20s" $count $member.User }}
+{{else}} 
+{{ $hunter = printf "#%-4d %-20d" $count (toInt (index (split .Key "_") 2)) }}
+{{end}}
+{{$wallet = printf "%5d 🦆" (toInt .Value) }}
+{{$count = add $count 1}}
+{{range $key, $value := sdict $hunter $wallet}}
+{{$fields = $fields.Append (sdict "name" $key "value" $value)}}
+{{end}}
+{{end}}
+
+{{if $fields}}
+{{$embed := cembed "title" "Duck🦆 Hunter's Leaderboard" "fields" $fields "footer" (sdict "text" (print "React with 🗑️ to delete this message.\nPage: " $page)) "color" (randInt 0 16777216) }}
+ 
+{{with $id}}
+{{editMessage nil $id $embed}}
+{{else}}
+{{addMessageReactions nil (sendMessageRetID nil $embed) "⬅️"  "➡️" "🗑" }}
+{{end}}
+{{end}}
