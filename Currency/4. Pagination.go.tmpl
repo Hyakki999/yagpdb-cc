@@ -1,0 +1,41 @@
+{{/*
+		Trigger type   : Reaction
+		Trigger		    : Reaction added+ removed
+*/}}
+
+
+{{/* Configuration Variable */}}
+{{ $leaderBoardCCID := 68 }}
+{{/* Configuration Variable Ends*/}}
+
+
+{{/* EMBED DELETE REACTION */}}
+{{if .Reaction}}
+{{if eq .Reaction.Emoji.Name "🗑"}}
+{{if .ReactionMessage.Embeds}}
+{{$embed := (index .ReactionMessage.Embeds 0)}}
+{{if $embed.Footer}}
+{{if $embed.Footer.Text}}
+{{if (reFind "🗑" $embed.Footer.Text)}}
+{{deleteAllMessageReactions nil .ReactionMessage.ID}}
+{{deleteMessage nil .ReactionMessage.ID 1}}
+{{end}}{{end}}{{end}}{{end}}{{end}}{{end}}
+
+{{/* TopCount Stuff */}}
+{{with .ReactionMessage.Embeds}}
+{{if and (eq (index . 0).Title "Counter Leaderboard") (index . 0).Footer}}
+{{$page := toInt (reFind `\d+` (index . 0).Footer.Text)}}
+ 
+{{if eq $.Reaction.Emoji.Name "⬅️"}}
+{{$page = sub $page 1}}
+{{else if eq $.Reaction.Emoji.Name "➡️"}}
+{{$page = add $page 1}}
+{{else}}
+{{$page = -1}}
+{{end}}
+ 
+{{if gt $page 0}}
+{{execCC $leaderBoardCCID nil 0 (sdict "page" $page "id" $.ReactionMessage.ID)}}
+{{end}}
+{{end}}
+{{end}}
