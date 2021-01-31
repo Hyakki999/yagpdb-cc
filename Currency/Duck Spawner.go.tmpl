@@ -1,0 +1,39 @@
+{{/*
+	Name: Duck spawner 
+    Author: Dr. Hyakkimaru#6020
+    Trigger Type: Regex
+    Trigger: `\A`
+*/}}
+
+
+{{/* CONFIGURATION VARIABLES */}}
+{{ $channel := 780653410047361026 }} {{/* Change the number with the channel_ID where ducks will spawn */}}
+{{/* CONFIGURATION VARIABLES END */}}
+
+
+{{/* Do not change anything brlow */}}
+{{ if not (dbGet 0 "quack") }}
+{{ if not .ExecData}}
+{{ execCC .CCID $channel 120 "data" }}
+{{else}}
+
+{{ $list := cslice "A" "B" "C" "D" "E" "F" "G" "H" "I" "J" "K" "L" "M" "N" "O" "P" "Q" "R" "S" "T" "U" "V" "W" "X" "Y" "Z" "1" "2" "3" "4" "5" "6" "7" "8" "9" "0" }}
+{{ $d := "" }}
+{{ range seq 0 4 }}
+{{$d = print $d (index $list (randInt (len $list)))}}
+{{ end }}
+
+{{ $link := " " }}
+{{ $base := "https://random-d.uk/api/" }}
+{{ if lt (randInt 10) 7 }} {{ $link = printf "%s%d.jpg" $base (randInt 1 130) }}
+{{ else }} {{ $link = printf "%s%d.gif" $base (randInt 1 29) }} {{ end }}
+{{ $gen := print "https://api.memegen.link/images/custom/_/" $d ".png?background=" }}
+{{ $post := print $gen $link }}
+
+{{ $id := " " }}
+{{ if and $d $post }}
+{{ $id = sendMessageRetID $channel (cembed "title" "Pick the 🦆 up by typing -pick <code>" "image" (sdict "url" $post) ) }}
+{{ end }}
+{{ dbSetExpire 0 "quack" (sdict "1" $d "2" $id "3" $channel) 604800 }}
+{{ end }}
+{{ end }}
