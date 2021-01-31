@@ -13,6 +13,15 @@
 
 
 {{/* Do not change anything below */}}
+
+{{ $helpMsg := cembed "description" "**__Duck Hunt__\n- Created by: Dr. Hyakkimaru#6020**" 
+										  "fields" ( cslice 
+													   	(sdict "name" `__🔸 Commands 🔸__` "value" "🔫 Pick: `-pick <code>`\n\n💲Balance: `-$`\n\n💰 Daily: `-timely`\n\n💸 Give: `-give <user> <amount>`\n\n📃 Leaderboard: `-leaderboard <page>`" "inline" false)
+													       (sdict "name" `__🔸 Mini-games 🔸__` "value" "🎡 Spin The Wheel: `-wheel <amount>`\n\n🎰 Slot Machine: `-slots <amount>`\n\n🃏 Blackjack: `-blackjack <amount>`" "inline" false)
+														)
+}}
+
+
 {{if eq (index .Args 0) "-timely"}}
 {{if (dbGet .User.ID "timely")}}
 {{ $left := humanizeDurationSeconds ((dbGet .User.ID "timely").ExpiresAt.Sub currentTime)}}
@@ -71,5 +80,5 @@
 {{ else }} {{ sendMessage nil ( cembed "title" ( print "Usage: -give <user> <amount>" ) ) }} {{ end }}
 
 {{ else if eq (index .Args 0) "-welp" }}
-{{ sendMessage nil ( cembed "description" "**__Duck Hunt__\n- Created by: Dr. Hyakkimaru#6020**" "fields" ( cslice (sdict "name" "Pick" "value" "*-pick <code>*\nExample: -pick CARJ" "inline" true) (sdict "name" "Daily" "value" "*-timely*" "inline" true) (sdict "name" "Balance" "value" "*-$*" "inline" true) (sdict "name" "Give" "value" "*-give <user> <amount>*\nExample: -give <@596956753657069599> 25" "inline" true) (sdict "name" "Spin The Wheel" "value" "*-wheel <amount>*\nExample: -wheel 10" "inline" true) (sdict "name" "Slot Machine" "value" "*-slots <amount>*\nExample: -slots 10" "inline" true) (sdict "name" "Top Hunter" "value" "*-tophunter <page>*\nExample: -tophunter | -tophunter 2 | -th " "inline" true) ) ) }}
+{{ sendMessage nil $helpMsg }}
 {{ end }}
