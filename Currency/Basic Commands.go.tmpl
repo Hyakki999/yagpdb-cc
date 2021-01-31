@@ -1,0 +1,75 @@
+{{/*
+	Name: Basic commands
+    Author: Dr. Hyakkimaru#6020
+    Usage: type `-welp` to see the list of commands.
+    Trigger Type: Regex
+    Trigger: `\A\-(timely\z|\$\z|pick|give|welp)`
+*/}}
+
+
+{{/* CONFIGURATION VARIABLES */}}
+{{ $dbName := "CREDITS" }} {{/* Name of the Key of your DB that stores users currency amount */}}
+{{/* CONFIGURATION VARIABLES END */}}
+
+
+{{/* Do not change anything below */}}
+{{if eq (index .Args 0) "-timely"}}
+{{if (dbGet .User.ID "timely")}}
+{{ $left := humanizeDurationSeconds ((dbGet .User.ID "timely").ExpiresAt.Sub currentTime)}}
+{{sendMessage nil (cembed "title" (print .User.String " ⚠️ wait for " $left " before you can claim your daily again!" ))}}
+{{ else }}
+{{$t := dbIncr .User.ID $dbName 30}}
+{{sendMessage nil (cembed "title" (print .User.String " you have claimed your daily 30🦆. You can claim again in 24 hours."))}}
+{{dbSetExpire .User.ID "timely" "d" 86400}}
+{{end}}
+
+{{else if eq (index .Args 0) "-$"}}
+{{sendMessage nil (cembed "title" (print .User.String " has " (dbGet .User.ID $dbName).Value "🦆"))}}
+
+{{ else if eq (index .Args 0) "-pick" }}
+{{ if not (dbGet 0 "quack") }}
+{{ else }}
+{{ $list := cslice "A" "B" "C" "D" "E" "F" "G" "H" "I" "J" "K" "L" "M" "N" "O" "P" "Q" "R" "S" "T" "U" "V" "W" "X" "Y" "Z" "1" "2" "3" "4" "5" "6" "7" "8" "9" "0" }}
+{{ $d := "" }}
+{{ range seq 0 20 }}
+{{$d = print $d (index $list (randInt (len $list)))}}
+{{ end }}
+
+{{ $g := sdict ( (dbGet 0 "quack").Value) }}
+{{ if .CmdArgs }}
+{{ if eq (len .CmdArgs) 1 }}
+{{ if eq (upper (index .CmdArgs 0)) ($g.Get "1") }}
+{{ $duck := randInt 1 8 }}
+{{ editMessage ($g.Get "3") ($g.Get "2") (cembed "title" (print .User.String " has picked " $duck "🦆")) }}
+{{ $silent := dbIncr .User.ID $dbName $duck }}
+{{ dbSetExpire 0 "quack" (sdict "1" $d) 120}}
+{{ deleteMessage ($g.Get "3") ($g.Get "2") 60 }}
+{{ end }}
+{{ end }}
+{{ end }}
+{{ end }}
+{{ deleteTrigger 0 }}
+
+{{ else if eq (index .Args 0) "-give" }}
+{{ if eq (len .CmdArgs) 2 }}
+{{ $sender := .User.ID }}
+{{ $receiver := (toInt (index .CmdArgs 0)) }}
+{{ if not $receiver }}
+{{ $receiver = (userArg ( index .Message.Mentions 0 )).ID }}
+{{end}}
+{{ $gift := toInt ( index .CmdArgs 1 ) }}
+{{ $sbal := toInt ( (dbGet .User.ID $dbName ).Value) }}
+{{ if ne $sender $receiver }}
+{{ if ge $gift 1 }}
+{{ if ge $sbal $gift }}
+{{ $silent1 := dbIncr $sender $dbName (mult -1 $gift) }}
+{{ $silent2 := dbIncr $receiver $dbName $gift }}
+{{ sendMessage nil (cembed "title" (print .User.String " gifted " $gift "🦆 to " (userArg $receiver).String )) }}
+{{ else }} {{ sendMessage nil ( cembed "title" ( print .User.String " insufficient 🦆") ) }} {{ end }}
+{{ else }} {{ sendMessage nil ( cembed "title" ( print .User.String " you should gift at least 1🦆") ) }} {{ end }}
+{{ else }} {{ sendMessage nil ( cembed "title" ( print .User.String " you cannot gift yourself >[") ) }} {{ end }}
+{{ else }} {{ sendMessage nil ( cembed "title" ( print "Usage: -give <user> <amount>" ) ) }} {{ end }}
+
+{{ else if eq (index .Args 0) "-welp" }}
+{{ sendMessage nil ( cembed "description" "**__Duck Hunt__\n- Created by: Dr. Hyakkimaru#6020**" "fields" ( cslice (sdict "name" "Pick" "value" "*-pick <code>*\nExample: -pick CARJ" "inline" true) (sdict "name" "Daily" "value" "*-timely*" "inline" true) (sdict "name" "Balance" "value" "*-$*" "inline" true) (sdict "name" "Give" "value" "*-give <user> <amount>*\nExample: -give <@596956753657069599> 25" "inline" true) (sdict "name" "Spin The Wheel" "value" "*-wheel <amount>*\nExample: -wheel 10" "inline" true) (sdict "name" "Slot Machine" "value" "*-slots <amount>*\nExample: -slots 10" "inline" true) (sdict "name" "Top Hunter" "value" "*-tophunter <page>*\nExample: -tophunter | -tophunter 2 | -th " "inline" true) ) ) }}
+{{ end }}
