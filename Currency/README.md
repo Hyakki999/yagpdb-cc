@@ -13,10 +13,13 @@ To see the list of commands type: -commands
 The main commands are: 
 1. Duck Spawner.
 2. Basic commands.
+
 Though rest of the commands are important as well.
 :)
 Read comments while setting this up.
+
 Comments are written like this => {{/* comments */}}
+
 It will guide you how to set it up.
 # Mini-games source
 - [Slot machine](https://github.com/yagpdb-cc/yagpdb-cc/blob/master/fun/slotMachine.go.tmpl)
@@ -28,5 +31,6 @@ It will guide you how to set it up.
 - [DZ](https://github.com/DZ-TM/Yagpdb.xyz)
 - [sponge](https://github.com/Spongerooski/yagpdb-cc)
 # Support
-I, Dr. Hyakkimaru, will be there to help in YAGPDB community and support server. 
+I, Dr. Hyakkimaru, will be there to help in YAGPDB community and support server.
+
 Feel free to ping for suggestions, error reports etc.
