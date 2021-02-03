@@ -1,17 +1,21 @@
+This is one of the best currency game I have played in discord.
+And this game is more enjoyable when you have an active server.
+
 # Duck Hunt
-Gameplay is simple and works best in a active server.
-There will be duck spawning in the spawner channel when you set up the spawner custom command and only one user can pick at a time.
+Gameplay is simple.
+There will be duck spawning in your server's general channel randomly and only one person can pick it up. This will be a hell for slow writers :( 
+There's also daily, leaderboard, mini-games etc.
+To see the list of commands type: -commands
 The main commands are: 
 1. Duck Spawner.
 2. Basic commands.
-
 Though rest of the commands are important as well.
-To see the list of commands type `-welp`.
 :)
+
+# Mini-games source
+- Slot machine: 
+- [Blackjack](https://github.com/Spongerooski/yagpdb-cc/blob/main/Blackjack/blackjack)
 
 # Support
 I, Dr. Hyakkimaru, will be there to help in YAGPDB community and support server. 
-Feel free ping for suggestions and .....
-
-
-Don't ask why it is what it is... Quack quack 
+Feel free to ping for suggestions, error reports etc.
