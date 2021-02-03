@@ -4,7 +4,9 @@ And this game is more enjoyable when you have an active server.
 # Duck Hunt
 Gameplay is simple.
 
-There will be duck spawning in your server's general channel randomly and only one person can pick it up. This will be a hell for slow writers :( 
+There will be duck spawning in your server's general channel randomly and only one person can pick it up.
+
+This will be a hell for slow writers :( 
 
 There's also daily, leaderboard, mini-games etc.
 
@@ -16,6 +18,7 @@ The main commands are:
 
 Though rest of the commands are important as well.
 :)
+
 Read comments while setting this up.
 
 Comments are written like this => {{/* comments */}}
