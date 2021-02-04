@@ -10,10 +10,10 @@ _One of my most favorite currency game which I have played in discord._
 
 ## Gameplay
 There will be duck spawning in your server's general channel randomly and only one person can pick it up.There's also daily, leaderboard, mini-games etc.
+---
+To see the list of commands type: -quack
 
-To see the list of commands type: -commands
-
-
+---
 # Sources
 <details><summary>Mini games</summary>
 
