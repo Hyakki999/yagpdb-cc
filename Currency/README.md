@@ -12,23 +12,27 @@
 - [YAGPDB cc's](#yagpdb-cc's)
 
 ---
-# Duck hunt
+## Duck hunt
 As the name implies, this is a game where we hunt ducks.
 
----
-The currency is ducks.
-So hunting ducks is the goal.
-
-Random amount of ducks will be spawning in your server's general chat and only one person can pick those up.  There's also daily, spin the wheel, slot machine etc. to get more ducks. 
+The currency is ducks. So hunting ducks is the goal. Random amount of ducks will be spawning in your server's general chat and only one person can pick those up.  There's also daily, spin the wheel, slot machine etc. to get more ducks. 
 
 To see the list of commands type: _-quack_
 
 ---
-# Adding these custom commands
-# Need help?
+## Adding these custom commands
 
-# Yagpdb cc's
-<details><summary>Mini games</summary>
+If you aren't too familiar with custom command or just need a refresher, [this article](https://github.com/Hyakki999/YAGPDB-cc/blob/main/README.md) explains it well.
+
+When you find a custom command you wish to add, the file will have a leading comment explaining what it does and the recommended trigger type & trigger value. You can add it in the YAGPDB dashboard with these attributes.
+
+## Need help?
+
+If you are having difficulties with one of the custom commands here, please get in touch via the [YAGPDB Support Server](https://discord.gg/5uVyq2E), where we can help you further. You can also open an issue on the issue tracker if that's what you prefer.
+
+---
+## Yagpdb cc's
+<details><summary>Mini games used here</summary>
 
   - [Slot machine](https://github.com/yagpdb-cc/yagpdb-cc/blob/master/fun/slotMachine.go.tmpl)
   - [Blackjack](https://github.com/Spongerooski/yagpdb-cc/blob/main/Blackjack/blackjack)
@@ -43,5 +47,8 @@ To see the list of commands type: _-quack_
   - [sponge](https://github.com/Spongerooski/yagpdb-cc)
 </details>
 
-# Support
+---
+## Support
 I, Dr. Hyakkimaru, will be there to help in YAGPDB community and support server. Feel free to ping for suggestions, error reports etc.
+
+---
