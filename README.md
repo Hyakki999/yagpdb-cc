@@ -6,7 +6,7 @@
 
 # Table of Contents
 - [Custom Commands](#custom-command)
-- [Contribution](#contribution)
+- [Disclaimer](#disclaimer)
 - [Need help](#need-help?)
 
 
@@ -30,7 +30,7 @@ In YAGPDB you can code to make additional commands that isn't built-in.
 </details>
 
 ---
-## Contribution
+## Disclaimer
 
 I am not responsible for any difficulties caused by these custom commands. These commands are not guaranteed to be working, use them at your own risk.
 
