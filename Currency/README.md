@@ -4,18 +4,26 @@
 
 > <p align="center">One of the best currency game for your server</p>
 
+# Table of Contents
+- [Duck Hunt](Duck hunt)
+- [Adding These Custom Commands]
+- [Need Help?]
+- [YAGPDB cc's]
+
+---
 # Duck hunt
-
-_One of my most favorite currency game which I have played in discord._
-
-## Gameplay
+As the name implies, this is a game where we hunt ducks.
+- Gameplay
 There will be duck spawning in your server's general channel randomly and only one person can pick it up.There's also daily, leaderboard, mini-games etc.
 
 ---
 To see the list of commands type: -quack
 
 ---
-# Sources
+# Adding these custom commands
+# Need help?
+
+# Yagpdb cc's
 <details><summary>Mini games</summary>
 
   - [Slot machine](https://github.com/yagpdb-cc/yagpdb-cc/blob/master/fun/slotMachine.go.tmpl)
