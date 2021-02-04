@@ -6,6 +6,7 @@
 
 # Table of Contents
 - [Custom Commands](#custom-command)
+- [Contribution](#contribution)
 - [Need help](#need-help?)
 
 
@@ -27,6 +28,11 @@ In YAGPDB you can code to make additional commands that isn't built-in.
   - [DZ](https://github.com/DZ-TM/Yagpdb.xyz)
   - [sponge](https://github.com/Spongerooski/yagpdb-cc)
 </details>
+
+---
+## Contribution
+
+I am not responsible for any difficulties caused by these custom commands. These commands are not guaranteed to be working, use them at your own risk.
 
 ---
 ## Need help?
