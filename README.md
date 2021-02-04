@@ -1,6 +1,6 @@
 #
 
-<h1 align="center"><img src="https://cdn.discordapp.com/avatars/596956753657069599/f913f1d1943ede689ade2f0cbdee4307.png" height=32px width=32px></img>&nbspHyakki's Duck Farm</h1>
+<h1 align="center"><img src="https://cdn.discordapp.com/avatars/596956753657069599/f913f1d1943ede689ade2f0cbdee4307.png" height=32px width=32px></img>&nbspDr. Hyakkimaru#6020</h1>
 
 > <p align="center">Hyakki's custom command for yagpdb users</p>
 
