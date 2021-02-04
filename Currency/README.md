@@ -1,25 +1,17 @@
 # Duck hunt
-This is one of the best currency game I have played in discord.
-And this game is more enjoyable when you have an active server.
+  This is one of the best currency game I have played in discord.
+  And this game is more enjoyable when you have an active server.
 
-##Gameplay is simple.
-There will be duck spawning in your server's general channel randomly and only one person can pick it up.
-This will be a hell for slow writers :( 
-There's also daily, leaderboard, mini-games etc.
-To see the list of commands type: -commands
+## Gameplay is simple.
+  There will be duck spawning in your server's general channel randomly and only one person can pick it up.
+  This will be a hell for slow writers :( 
+  There's also daily, leaderboard, mini-games etc.
+  To see the list of commands type: -commands
 
-The main commands are: 
-1. Duck Spawner.
-2. Basic commands.
-
-Though rest of the commands are important as well.
-:)
-
-Read comments while setting this up.
-Comments are written like this 
+  Read comments while setting this up.
+  Comments are written like this 
 => {{/* comments */}}
-
-It will guide you how to set it up.
+  It will guide you on how to set it up.
 
 # Sources
 <details><summary>Mini games</summary>
