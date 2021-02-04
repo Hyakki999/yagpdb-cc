@@ -1,17 +1,17 @@
+#
+
+<h1 align="center"><img src="https://cdn.discordapp.com/avatars/596956753657069599/f913f1d1943ede689ade2f0cbdee4307.png" height=32px width=32px></img>&nbspHyakki's Duck Farm</h1>
+
+> <p align="center">One of the best currency game for your server</p>
+
 # Duck hunt
-  This is one of the best currency game I have played in discord.
-  And this game is more enjoyable when you have an active server.
+*One of my most favorite currency game which I have played in discord.*
+---
+## Gameplay
+There will be duck spawning in your server's general channel randomly and only one person can pick it up.There's also daily, leaderboard, mini-games etc.
 
-## Gameplay is simple.
-  There will be duck spawning in your server's general channel randomly and only one person can pick it up.
-  This will be a hell for slow writers :( 
-  There's also daily, leaderboard, mini-games etc.
-  To see the list of commands type: -commands
+To see the list of commands type: -commands
 
-  Read comments while setting this up.
-  Comments are written like this 
-=> {{/* comments */}}
-  It will guide you on how to set it up.
 
 # Sources
 <details><summary>Mini games</summary>
