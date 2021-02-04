@@ -16,7 +16,8 @@
 As the name implies, this is a game where we hunt ducks.
 
 ---
-The currency is ducks. So hunting ducks is the goal.
+The currency is ducks.
+So hunting ducks is the goal.
 
 Random amount of ducks will be spawning in your server's general chat and only one person can pick those up.  There's also daily, spin the wheel, slot machine etc. to get more ducks. 
 
