@@ -5,10 +5,11 @@
 > <p align="center">One of the best currency game for your server</p>
 
 # Table of Contents
-- [Duck Hunt](Duck hunt)
-- [Adding These Custom Commands]
-- [Need Help?]
-- [YAGPDB cc's]
+
+- [Duck Hunt](#duck-hunt)
+- [Adding These Custom Commands](#adding-these-custom-commands)
+- [Need Help?](#need-help?)
+- [YAGPDB cc's](#yagpdb-cc's)
 
 ---
 # Duck hunt
