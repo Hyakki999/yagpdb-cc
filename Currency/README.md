@@ -5,7 +5,7 @@
 > <p align="center">One of the best currency game for your server</p>
 
 # Duck hunt
-*One of my most favorite currency game which I have played in discord.*
+_One of my most favorite currency game which I have played in discord._
 ---
 ## Gameplay
 There will be duck spawning in your server's general channel randomly and only one person can pick it up.There's also daily, leaderboard, mini-games etc.
