@@ -14,11 +14,15 @@
 ---
 # Duck hunt
 As the name implies, this is a game where we hunt ducks.
-- Gameplay
-There will be duck spawning in your server's general channel randomly and only one person can pick it up.There's also daily, leaderboard, mini-games etc.
 
 ---
-To see the list of commands type: -quack
+The currency is ducks. So hunting ducks is the goal.
+
+- Gameplay
+
+Random amount of ducks will be spawning in your server's general chat and only one person can pick those up.  There's also daily, leaderboard, mini-games etc.
+
+To see the list of commands type: _-quack_
 
 ---
 # Adding these custom commands
