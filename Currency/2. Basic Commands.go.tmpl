@@ -4,7 +4,7 @@
     
 	Recommended:
 	- Trigger Type: Regex
-	- Trigger: `\A\-(?i)(timely\z|\$\z|pick|give|commands)`
+	- Trigger: `\A\-(?i)(timely\z|\$\z|pick|give|quack)`
 */}}
 
 
@@ -80,6 +80,6 @@
 	{{ else }}
 		{{ sendMessage nil ( cembed "title" ( print "Usage: -give <user> <amount>" ) ) }}
 	{{ end }}
-{{ else if eq (lower (index .Args 0) ) "-commands" }}
+{{ else if eq (lower (index .Args 0) ) "-quack" }}
 	{{ sendMessage nil $helpMsg }}
 {{ end }}
