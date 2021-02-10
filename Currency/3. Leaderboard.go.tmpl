@@ -1,5 +1,5 @@
 {{/*
-    Name: Top Hunter Leaderboard
+    Name: Leaderboard
     Author: Dr. Hyakkimaru#6020
     Usage: `-tophunter (page)`
     Trigger Type: Regex
@@ -29,7 +29,7 @@
 {{$num_per_page := 10}}
 {{$skip := mult (sub $page 1) $num_per_page}}
 {{$text := ""}} {{$count := add $skip 1}}
-{{range (dbTopEntries `hunter\_tracker\_%` 10 $skip)}}
+{{range (dbTopEntries `hunter\_tracker\_%` 9 $skip)}}
 {{$member := getMember (toInt (index (split .Key "_") 2))}}
 {{if $member}}
 {{ $hunter = printf "#%-4d %-20s" $count $member.User }}
@@ -39,12 +39,12 @@
 {{$wallet = printf "%5d 🦆" (toInt .Value) }}
 {{$count = add $count 1}}
 {{range $key, $value := sdict $hunter $wallet}}
-{{$fields = $fields.Append (sdict "name" $key "value" $value)}}
+{{$fields = $fields.Append (sdict "name" $key "value" $value "inline" true)}}
 {{end}}
 {{end}}
 
 {{if $fields}}
-{{$embed := cembed "title" "Duck🦆 Hunter's Leaderboard" "fields" $fields "footer" (sdict "text" (print "React with 🗑️ to delete this message.\nPage: " $page)) "color" (randInt 0 16777216) }}
+{{$embed := cembed '"title" "🦆 Leaderboard" "fields" $fields "footer" (sdict "text" (print "React with 🗑️ to delete this message.\nPage: " $page)) "color" (randInt 0 16777216) }}
  
 {{with $id}}
 {{editMessage nil $id $embed}}
