@@ -53,7 +53,8 @@
      『0.1』   『0.3』   『0.5』
      ` }}
 {{ $bal := toInt (dbGet .User.ID $dbName).Value }}
-
+{{ $red := 0xff2627 }}
+{{ $gre := 0x76ff03 }}
 {{ if eq .Channel.ID $channel }}
 	{{ if .CmdArgs}}
 		{{ $bet := toInt ( index .CmdArgs 0 ) }}
