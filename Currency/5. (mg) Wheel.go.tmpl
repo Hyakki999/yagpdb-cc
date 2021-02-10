@@ -62,11 +62,11 @@
 				{{ $silent := dbIncr .User.ID $dbName ( mult -1 $bet ) }}
 				{{ $amount := toInt ( round ( mult ( toFloat $bet ) $point ) ) }}
 				{{ $silent := dbIncr .User.ID $dbName $amount }}
-				{{ sendMessage nil ( cembed "title" ( print .User.String " won: " $amount $fh $arrow $sh ) ) }}
+				{{ sendMessage nil ( cembed "color" $gre "title" ( print .User.String " won: " $amount $fh $arrow $sh ) ) }}
 			{{ else }}
-				{{ sendMessage nil ( cembed "title" ( print .User.String $limit ) ) }} {{ end }}
+				{{ sendMessage nil ( cembed "color" $red "title" ( print .User.String $limit ) ) }} {{ end }}
 		{{ else }}
-			{{ sendMessage nil ( cembed "title" ( print .User.String $bb1 ) ) }} {{ end }}
+			{{ sendMessage nil ( cembed "color" $red "title" ( print .User.String $bb1 ) ) }} {{ end }}
 	{{ else }}
-		{{ sendMessage nil ( cembed "title" ( print "Usage: \n" $helpText ) ) }} {{ end }}
+		{{ sendMessage nil ( cembed "color" $red "title" ( print "Usage: \n" $helpText ) ) }} {{ end }}
 {{ end }}
