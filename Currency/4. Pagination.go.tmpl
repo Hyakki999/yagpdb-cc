@@ -23,7 +23,7 @@
 
 {{/* TopCount Stuff */}}
 {{with .ReactionMessage.Embeds}}
-{{if and (eq (index . 0).Title "Counter Leaderboard") (index . 0).Footer}}
+{{if and (eq (index . 0).Title "🦆 Leaderboard") (index . 0).Footer}}
 {{$page := toInt (reFind `\d+` (index . 0).Footer.Text)}}
  
 {{if eq $.Reaction.Emoji.Name "⬅️"}}
