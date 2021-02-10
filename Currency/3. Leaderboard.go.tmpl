@@ -44,7 +44,7 @@
 {{end}}
 
 {{if $fields}}
-{{$embed := cembed '"title" "🦆 Leaderboard" "fields" $fields "footer" (sdict "text" (print "React with 🗑️ to delete this message.\nPage: " $page)) "color" (randInt 0 16777216) }}
+{{$embed := cembed "title" "🦆 Leaderboard" "fields" $fields "footer" (sdict "text" (print "React with 🗑️ to delete this message.\nPage: " $page)) "color" (randInt 0 16777216) }}
  
 {{with $id}}
 {{editMessage nil $id $embed}}
