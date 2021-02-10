@@ -1,1 +1,215 @@
-Under construction 👷
+{{/*
+	Name: Duck Hunt Shop
+	Author: Dr. Hyakkimaru#6020
+	
+	Recommended
+	- Trigger Type: Regex
+	- Trigger: \A\-(?i)\s*(store|buy|(inv(entory)?))\s*
+*/}}
+
+
+{{ $red := 0xff2627 }}
+{{ $gre := 0x76ff03 }}
+
+{{/* add item in store */}}
+{{ define "add" }}
+{{ $key := joinStr "" "dshop_items_" .name }}
+{{ dbSet 68 $key .price }}
+{{ sendMessage nil ( cembed "color" .gre "title" "Added!" "description" (print "You have added <@&" .name "> role in shop.") ) }}
+{{ end }}
+
+{{/* remove item from store */}}
+{{ define "remove" }}
+{{ $key := joinStr "" "dshop_items_" .name }}
+{{ dbDel 68 $key }}
+{{ sendMessage nil ( cembed "color" .red "title" "Removed!" "description" (print "You have removed <@&" .name "> role from shop.") ) }}
+{{ end }}
+
+{{/* add item in inventory */}}
+{{ define "invadd" }}
+{{ $key := joinStr "" "duck_inv_" .name }}
+{{ dbSet ( toInt .userid) $key " " }}
+{{ sendMessage nil ( cembed "color" .gre "title" "Successful!" "description" (print "You have bought <@&" .name "> role.") ) }}
+{{ end }}
+
+
+{{/* Taking input */}}
+{{ $adm := false }}
+{{$perms := split (index (split (exec "viewperms" ) "\n" ) 2) ", "}}
+{{if in $perms "Administrator"}}
+	{{ $adm = true }}
+{{end}}
+{{ $item := sdict "gre" $gre "red" $red }}
+{{ if eq "-store" ( lower ( index .Args 0 ) ) }}
+	{{ if ge ( len .CmdArgs ) 1 }}
+		{{ if eq "add" ( lower ( index .CmdArgs 0 ) ) }}
+			{{ if $adm }} {{ if ge ( len .CmdArgs ) 2 }}
+				{{ $role := toInt (reFind `\d{17,}` (index .CmdArgs 1) ) }}
+				{{ if .Guild.Role $role }}
+					{{ $item.Set "name" $role }}
+						{{ if ge ( len .CmdArgs ) 3 }}
+							{{ $item.Set "price" ( toInt ( index .CmdArgs 2 ) ) }}
+							{{ template "add" $item }}
+						{{ else }}
+							{{ sendMessage nil ( cembed "color" $red "title" "Error! invalid role" "description" "Usage:\n-store <name or id> <price>" ) }}
+						{{ end }}
+				{{ else }}
+					{{ sendMessage nil ( cembed "color" $red "title" "Error! invalid role" "description" "Usage:\n-store <name or id> <price>" ) }}
+				{{ end }}
+			{{ end }} {{ end }}
+		{{ else if eq "remove" ( lower ( index .CmdArgs 0 ) ) }}
+			{{ if $adm }} {{ if ge ( len .CmdArgs ) 2 }}
+				{{ $role := toInt (reFind `\d{17,}` (index .CmdArgs 1) ) }}
+				{{ if .Guild.Role $role }}
+					{{ $item.Set "name" $role }}
+					{{ template "remove" $item }}
+				{{ else }}
+					{{ sendMessage nil ( cembed "color" $red "title" "Error! invalid role" "description" "Usage:\n-store remove <name or id>" ) }}
+				{{ end }}
+			{{ end }} {{ end }}
+		{{ else if eq "view" ( lower ( index .CmdArgs 0 ) ) }}
+	
+			{{/* View Store Start */}}
+			{{$page := 1}}{{$id := 0}}
+			{{if .CmdArgs}} {{$page = toInt (index .CmdArgs 0)}} {{if lt $page 1}} {{$page = 1}} {{end}} {{end}} 
+			
+			{{$head := " "}} {{$body := " " }} {{$fields := cslice}} {{ $num_per_page := 9 }}
+			{{$skip := mult (sub $page 1) $num_per_page}}
+			{{$text := ""}} {{$count := add $skip 1}}
+
+			{{range (dbBottomEntries `dshop\_items\_%` 9 $skip)}}
+				{{if ( $.Guild.Role (toInt (index (split .Key "_") 2 ) ) ) }}
+					{{ $ri := printf "%d" (toInt (index (split .Key "_") 2 ) ) }}
+					{{ $body = print "You will get __**" ($.Guild.Role ( toInt $ri)).Name "**__ role" }}
+					{{ $head = printf "#%d - %d 🦆" $count ( toInt .Value ) }}
+					{{$count = add $count 1}}
+					{{$fields = $fields.Append (sdict "name" $head "value" $body "inline" true)}}
+				{{ else }}
+					{{ dbDel 68 .Key }}
+				{{end}}
+			{{end}}
+			{{if $fields}} {{$embed := cembed "title" "🦆 Shop" "fields" $fields "footer" (sdict "text" (print "React with 🗑️ to delete this message.\nPage: " $page)) "color" (randInt 0 16777216) }}
+				{{addMessageReactions nil (sendMessageRetID nil $embed) "🗑" }}
+			{{end}}
+			{{/* View Store End*/}}
+			
+		{{ end }}
+	{{ else }}
+		{{ sendMessage nil ( cembed "color" $red "description" "Error!!! Usage:\n-store view <page_num>\n-buy <role: name/pos>\n\n**Admin Commands**\n-store add <role: id/mention> <price>\n-store remove <role: id/mention>" ) }}
+	{{ end }}
+{{ else if eq "-buy" ( lower ( index .Args 0 ) ) }}
+	{{ $name := true }}
+	{{ $cmd := " " }}
+	{{ $dic := sdict }}
+	{{ $count := 1 }}
+	{{ $item.Set "userid" (print .User.ID) }}
+	{{ if ge (len .CmdArgs) 1 }}
+		{{ if reFind `#\d+` (index .CmdArgs 0) }}
+			{{ $name = false }}
+			{{ $cmd = printf "%v" (index .CmdArgs 0) }}
+		{{ else }}
+			{{ $cmd = .StrippedMsg }}
+		{{ end }}
+		{{ if $name }}
+			{{ range ( dbBottomEntries `dshop\_items\_%` 100 0 ) }}
+				{{ if ( $.Guild.Role (toInt (index (split .Key "_") 2)) ) }}
+					{{ $ri := (toInt (index (split .Key "_") 2)) }}
+					{{ $rn := ($.Guild.Role $ri).Name }}
+					{{ if eq (lower $rn) (lower $cmd) }}
+						{{ $item.Set "name" $ri }}
+						{{ template "invadd" $item }}
+					{{ end }}
+				{{ else }}
+					{{ dbDel 68 .Key }}
+				{{ end }}
+			{{ end }}
+		{{ else }}
+			{{ range ( dbBottomEntries `dshop\_items\_%` 100 0 ) }}
+				{{ if ( $.Guild.Role (toInt (index (split .Key "_") 2)) ) }}
+					{{ $dic.Set (printf "#%d" $count) (printf "%d" (toInt (index (split .Key "_") 2)) ) }}
+					{{$count = add $count 1}}
+				{{ else }}
+					{{ dbDel 68 .Key }}
+				{{end}}
+			{{end}}
+			{{ range $k, $v := $dic }}
+				{{ if eq $k $cmd }}
+					{{ $item.Set "name" $v }}
+					{{ template "invadd" $item }}
+				{{ end }}
+			{{ end }}
+		{{ end }}
+	{{ else }}
+		{{ sendMessage nil ( cembed "color" $red "title" "Usage:\n-buy <role: #pos/name>" ) }}
+	{{ end }}
+{{ else if eq ( lower ( index .Args 0 ) ) "-inv" "-inventory" }}
+
+	{{/* View inventory Start */}}
+	{{$embed := sdict "color" (randInt 0 16777216) "title" "🦆 Inventory" "fields" (cslice ( sdict "name" "Roles" "value" "Empty!!!" "inline" false )) "footer" (sdict "text" "React with 🗑️ to delete this message.") "color" (randInt 0 16777216) }}
+	{{ $sli := ""}} {{ $fold := cslice }}
+	{{ range ( dbBottomEntries `dshop\_items\_%` 100 0 ) }}
+		{{ if ( $.Guild.Role (toInt (index (split .Key "_") 2)) ) }}
+			{{ $fold = $fold.Append (str (toInt (index (split .Key "_") 2))) }}
+		{{ else }}
+			{{ dbDel 68 .Key }}
+		{{end}}
+	{{end}}
+	{{ range ( dbBottomEntries `duck\_inv\_%` 100 0 ) }}
+		{{ if ( $.Guild.Role (toInt (index (split .Key "_") 2)) ) }}
+			{{ if in $fold (str (toInt (index (split .Key "_") 2))) }}
+				{{ $sli = joinStr ", " $sli (printf "<@&%d>" (toInt (index (split .Key "_") 2)) )}}
+			{{ else }}
+				{{ dbDel .User.ID .Key }}
+			{{end}}
+		{{ else }}
+			{{ dbDel .User.ID .Key }}
+		{{end}}
+	{{end}}
+	
+	{{ if $sli }}
+		{{ $embed.Set "fields" (cslice ( sdict "name" "Roles" "value" $sli "inline" false )) }}
+	{{ end }}
+	
+	{{if not (reFind `Empty!!!`  ((index $embed.fields 0).Get "value")) }}
+		{{addMessageReactions nil (sendMessageRetID nil ( cembed $embed)) "🗑" }}
+	{{end}}
+	{{/* View inventory End */}}
+
+{{ else if eq "-item" ( lower ( index .Args 0 ) ) }}
+	{{ if ge (len .CmdArgs) 1 }}
+		{{ $cmd := .StrippedMsg }}
+		{{ $fold := cslice }}
+		{{ range ( dbBottomEntries `dshop\_items\_%` 100 0 ) }}
+			{{ if ( $.Guild.Role (toInt (index (split .Key "_") 2)) ) }}
+				{{ $fold = $fold.Append (str (toInt (index (split .Key "_") 2))) }}
+			{{ else }}
+				{{ dbDel 68 .Key }}
+			{{end}}
+		{{end}}
+		{{ range ( dbBottomEntries `duck\_inv\_%` 100 0 ) }}
+			{{ if ( $.Guild.Role (toInt (index (split .Key "_") 2)) ) }}
+				{{ $ri := (toInt (index (split .Key "_") 2)) }}
+				{{ $rn := ($.Guild.Role $ri).Name }}
+				{{ if in $fold (str $ri) }}
+					{{ if eq (lower $rn) (lower $cmd) }}
+						{{ if hasRoleID $ri }}
+							{{ removeRoleID $ri }}
+							{{ sendMessage nil ( cembed "color" $red "title" "Successful!" "description" (print "Deactivated <@&" $ri "> role.") ) }}
+						{{ else }}
+							{{ addRoleID $ri }}
+							{{ sendMessage nil ( cembed "color" $gre "title" "Successful!" "description" (print "Activated <@&" $ri "> role.") ) }}
+						{{ end }}
+					{{ else }}
+						{{ sendMessage nil ( cembed "color" $red "title" "Error! invalid role name or you haven't bought it" ) }}
+					{{ end }}
+				{{ else }}
+					{{ dbDel .User.ID .Key }}
+				{{end}}
+			{{ else }}
+				{{ dbDel .User.ID .Key }}
+			{{end}}
+		{{end}}
+	{{ else }}
+		{{ sendMessage nil ( cembed "color" $red "title" "Usage:\n-item <role: name>" ) }}
+	{{ end }}
+{{ end }}
