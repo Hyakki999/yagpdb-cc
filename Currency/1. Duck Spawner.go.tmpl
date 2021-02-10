@@ -27,7 +27,7 @@
 
 {{ $id := " " }}
 {{ if and $d $post }}
-{{ $id = sendMessageRetID $channel (cembed "title" "Pick the 🦆 up by typing -pick <code>" "image" (sdict "url" $post) ) }}
+{{ $id = sendMessageRetID $channel (cembed "color" 0xf8ff02 "title" "Pick the 🦆 up by typing -pick <code>" "image" (sdict "url" $post) ) }}
 {{ end }}
 {{ dbSetExpire 0 "quack" (sdict "1" $d "2" $id "3" $channel) 604800 }}
 {{ end }}
