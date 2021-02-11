@@ -76,7 +76,7 @@
 	
 			{{/* View Store Start */}}
 			{{$page := 1}}{{$id := 0}}
-			{{if .CmdArgs}} {{$page = toInt (index .CmdArgs 1)}} {{if lt $page 1}} {{$page = 1}} {{end}} {{end}} 
+			{{if ge (len .CmdArgs) 2}} {{$page = toInt (index .CmdArgs 1)}} {{if lt $page 1}} {{$page = 1}} {{end}} {{end}} 
 			
 			{{$head := " "}} {{$body := " " }} {{$fields := cslice}} {{ $num_per_page := 9 }}
 			{{$skip := mult (sub $page 1) $num_per_page}}
