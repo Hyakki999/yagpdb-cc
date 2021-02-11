@@ -4,10 +4,15 @@
 	
 	Recommended
 	- Trigger Type: Regex
-	- Trigger: \A\-(?i)\s*(store|buy|(inv(entory)?))\s*
+	- Trigger: \A\-(?i)(store|buy|item|inv(entory)?)\s*
 */}}
 
+{{/* CONFIGURATION VARIABLES */}}
+{{ $dbName := "CREDITS" }} {{/* Name of the Key of your DB that stores users currency amount */}}
+{{ $limit := " insufficient 🦆" }} {{/* Error message when user doesn't have enough credits to place bet */}}
+{{/* CONFIGURATION VARIABLES ENDS */}}
 
+{{/* Do not change anything below */}}	
 {{ $red := 0xff2627 }}
 {{ $gre := 0x76ff03 }}
 
@@ -98,45 +103,50 @@
 		{{ sendMessage nil ( cembed "color" $red "description" "Error!!! Usage:\n-store view <page_num>\n-buy <role: name/pos>\n\n**Admin Commands**\n-store add <role: id/mention> <price>\n-store remove <role: id/mention>" ) }}
 	{{ end }}
 {{ else if eq "-buy" ( lower ( index .Args 0 ) ) }}
-	{{ $name := true }}
-	{{ $cmd := " " }}
-	{{ $dic := sdict }}
-	{{ $count := 1 }}
+	{{ $name := true }} {{ $cmd := " " }} {{ $dic := sdict }}
+	{{ $bal := toInt ( ( dbGet .User.ID $dbName).Value) }}
+	{{ $count := 1 }} {{ $run := true }}
 	{{ $item.Set "userid" (print .User.ID) }}
 	{{ if ge (len .CmdArgs) 1 }}
 		{{ if reFind `#\d+` (index .CmdArgs 0) }}
 			{{ $name = false }}
-			{{ $cmd = printf "%v" (index .CmdArgs 0) }}
+			{{ $cmd = printf "%s" (index .CmdArgs 0) }}
 		{{ else }}
 			{{ $cmd = .StrippedMsg }}
 		{{ end }}
-		{{ if $name }}
-			{{ range ( dbBottomEntries `dshop\_items\_%` 100 0 ) }}
-				{{ if ( $.Guild.Role (toInt (index (split .Key "_") 2)) ) }}
+		{{ range ( dbBottomEntries `dshop\_items\_%` 100 0 ) }}
+			{{ if ( $.Guild.Role (toInt (index (split .Key "_") 2)) ) }}
+				{{ $pri := toInt .Value }}
+				{{ if $name }}
 					{{ $ri := (toInt (index (split .Key "_") 2)) }}
 					{{ $rn := ($.Guild.Role $ri).Name }}
 					{{ if eq (lower $rn) (lower $cmd) }}
-						{{ $item.Set "name" $ri }}
-						{{ template "invadd" $item }}
+						{{ if $run }} {{ if gt $bal $pri }}
+							{{ $item.Set "name" $ri }}
+							{{ template "invadd" $item }}
+							{{ $silent := dbIncr .User.ID $dbName ( mult -1 $pri ) }}
+						{{ else }}
+							{{ $run = false }} {{ sendMessage nil ( cembed "color" $red "title" ( print $.User $limit ) ) }}
+						{{ end }} {{ end }}
 					{{ end }}
 				{{ else }}
-					{{ dbDel 68 .Key }}
-				{{ end }}
-			{{ end }}
-		{{ else }}
-			{{ range ( dbBottomEntries `dshop\_items\_%` 100 0 ) }}
-				{{ if ( $.Guild.Role (toInt (index (split .Key "_") 2)) ) }}
 					{{ $dic.Set (printf "#%d" $count) (printf "%d" (toInt (index (split .Key "_") 2)) ) }}
 					{{$count = add $count 1}}
-				{{ else }}
-					{{ dbDel 68 .Key }}
-				{{end}}
-			{{end}}
-			{{ range $k, $v := $dic }}
-				{{ if eq $k $cmd }}
-					{{ $item.Set "name" $v }}
-					{{ template "invadd" $item }}
+					{{ range $k, $v := $dic }}
+						{{ if eq $k $cmd }}
+							{{ if $run }} {{ if gt $bal $pri }}
+								{{ $item.Set "name" $v }}
+								{{ $cmd = "" }}
+								{{ $silent := dbIncr .User.ID $dbName ( mult -1 $pri ) }}
+								{{ template "invadd" $item }}
+							{{ else }}
+								{{ $run = false }} {{ sendMessage nil ( cembed "color" $red "title" ( print $.User $limit ) ) }}
+							{{ end }} {{ end }}
+						{{ end }}
+					{{ end }}
 				{{ end }}
+			{{ else }}
+				{{ dbDel 68 .Key }}
 			{{ end }}
 		{{ end }}
 	{{ else }}
@@ -169,10 +179,7 @@
 	{{ if $sli }}
 		{{ $embed.Set "fields" (cslice ( sdict "name" "Roles" "value" $sli "inline" false )) }}
 	{{ end }}
-	
-	{{if not (reFind `Empty!!!`  ((index $embed.fields 0).Get "value")) }}
 		{{addMessageReactions nil (sendMessageRetID nil ( cembed $embed)) "🗑" }}
-	{{end}}
 	{{/* View inventory End */}}
 
 {{ else if eq "-item" ( lower ( index .Args 0 ) ) }}
@@ -199,8 +206,6 @@
 							{{ addRoleID $ri }}
 							{{ sendMessage nil ( cembed "color" $gre "title" "Successful!" "description" (print "Activated <@&" $ri "> role.") ) }}
 						{{ end }}
-					{{ else }}
-						{{ sendMessage nil ( cembed "color" $red "title" "Error! invalid role name or you haven't bought it" ) }}
 					{{ end }}
 				{{ else }}
 					{{ dbDel .User.ID .Key }}
