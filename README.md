@@ -19,7 +19,7 @@ In YAGPDB you can code to make additional commands that isn't built-in.
   - [Templates](https://docs.yagpdb.xyz/reference/templates)
 </details>
 
-<details><summary>YAGPDB CC'S</summary>
+<details><summary>YAGPDB cc repositories</summary>
 
   - [YAGPDB cc's](https://github.com/yagpdb-cc/yagpdb-cc)
   - [wolf's](https://github.com/TheHDCrafter/yagpdb-cc)
@@ -27,6 +27,18 @@ In YAGPDB you can code to make additional commands that isn't built-in.
   - [DZ](https://github.com/DZ-TM/Yagpdb.xyz)
   - [sponge](https://github.com/Spongerooski/yagpdb-cc)
 </details>
+
+---
+## Licence:  
+You do not have to include [the full licence](https://github.com/Hyakki999/YAGPDB-cc/blob/main/LICENSE) in the code because it is too long. That's why I made [this small text](#small-licence-text) that has to stay in the code if it is found there.  
+If [that licence](#small-licence-text) can not be found on the code in this repository, you can do whatever you want with the code.  
+
+#### Small licence text:
+```
+Copyright: 2020 Hyakki999
+License: MIT
+Repository: https://github.com/Hyakki999/YAGPDB-cc
+```
 
 ---
 ## Disclaimer
