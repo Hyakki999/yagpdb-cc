@@ -38,7 +38,7 @@ If [that small text](#small-licence-text) can not be found on the code in this r
 
 #### Small licence text:
 ```
-Copyright: 2020 Hyakki999
+Copyright: 2021 Hyakki999
 License: MIT
 Repository: https://github.com/Hyakki999/YAGPDB-cc
 ```
