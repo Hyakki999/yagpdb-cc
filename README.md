@@ -31,10 +31,10 @@ In YAGPDB you can code to make additional commands that isn't built-in.
 
 ---
 ## Licence:  
- - [the full licence](https://github.com/Hyakki999/YAGPDB-cc/blob/main/LICENSE)
+ - [The full licence](https://github.com/Hyakki999/YAGPDB-cc/blob/main/LICENSE)
 
-Include [this small text](#small-licence-text) in the code if it is found there.  
-If [that small text](#small-licence-text) can not be found on the code in this repository, you can do whatever you want with the code.  
+Include [this small licence](#small-licence-text) in the code if it is found there.  
+If [that small licence](#small-licence-text) can not be found on the code in this repository, you can do whatever you want with the code.  
 
 #### Small licence text:
 ```
