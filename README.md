@@ -5,6 +5,7 @@
 
 # Table of Contents
 - [Custom Commands](#custom-command)
+- [Licence](#licence)
 - [Disclaimer](#disclaimer)
 - [Need help](#need-help?)
 
