@@ -51,6 +51,10 @@ I am not responsible for any difficulties caused by these custom commands. These
 ---
 ## Need help?
 
-If you are having difficulties with one of the custom commands here, please get in touch with me via the [YAGPDB Support Server](https://discord.gg/5uVyq2E), where I can help you further. You can also open an issue on the issue tracker if that's what you prefer.
+If you need help with these custom commands here, join my server [server link](https://discord.gg/VGdS5Mg) where I can help you further.
+
+- [YAGPDB Support Server](https://discord.gg/5uVyq2E)
+
+You can also open an issue on the issue tracker if that's what you prefer.
 
 ---
