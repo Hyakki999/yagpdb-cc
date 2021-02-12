@@ -54,7 +54,7 @@ I am not responsible for any difficulties caused by these custom commands. These
 If you need help with these custom commands here, join my server where I can help you further.
 
 - [YAGPDB Support Server](https://discord.gg/5uVyq2E)
-- [server link](https://discord.gg/VGdS5Mg)
+- [ONE](https://discord.gg/VGdS5Mg) MY SERVER
 
 You can also open an issue on the issue tracker if that's what you prefer.
 
