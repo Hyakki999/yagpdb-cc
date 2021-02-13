@@ -15,9 +15,17 @@ To see the list of commands type: _-quack_
 ---
 ## Adding these custom commands
 
-You are required to add all the Commands. When you find a custom command you wish to add, the file will have a leading comment explaining what it does and the recommended trigger type & trigger value will be given in comments. You need to add it in the YAGPDB dashboard with these attributes.
+You are required to add all the commands. Every command has a leading comment explaining the trigger type and trigger. There are also some comments explaining what you can change and what not.
+```go
+{{/* This is a comment */}}
+{{/* 
+    This is a comment
+*/}}
+```
 
-If you aren't too familiar with custom command or just need a refresher, [this article](https://github.com/Hyakki999/YAGPDB-cc/blob/main/README.md) explains it well.
+If you don't know how custom command works or need a refresher read [this article](
+
+---
 ## Mini-games
 Mini games used here:-
   - [Slot machine](https://github.com/yagpdb-cc/yagpdb-cc/blob/master/fun/slotMachine.go.tmpl)
