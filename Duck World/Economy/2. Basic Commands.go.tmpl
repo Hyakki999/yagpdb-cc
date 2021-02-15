@@ -4,7 +4,7 @@
     
 	Recommended:
 	- Trigger Type: Regex
-	- Trigger: `\A\-(?i)(timely\z|\$\z|pick|give|quack)`
+	- Trigger: `\A\-(?i)(timely\z|\$\z|pick|give)`
 
     Copyright: 2021 Hyakki999
     License: MIT
@@ -14,13 +14,7 @@
 
 
 {{/* CONFIGURATION VARIABLES */}}
-{{ $dbName := "CREDITS" }} {{/* Name of the Key of your DB that stores users currency amount */}}
-{{ $helpMsg := cembed "color" 0xff2627 "description" "**__Duck Hunt__\n- Created by: Dr. Hyakkimaru#6020**" 
-										  "fields" ( cslice 
-													       (sdict "name" `__🔸 Commands 🔸__` "value" "🔫 Pick: `-pick <code>`\n\n💲Balance: `-$`\n\n💰 Daily: `-timely`\n\n💸 Give: `-give <user> <amount>`\n\n📃 Leaderboard: `-leaderboard <page>`" "inline" false)
-													       (sdict "name" `__🔸 Mini-games 🔸__` "value" "🎡 Spin The Wheel: `-wheel <amount>`\n\n🎰 Slot Machine: `-slots <amount>`\n\n🃏 Blackjack: `-blackjack <amount>`" "inline" false)
-													       (sdict "name" `__🔸 Shop 🔸__` "value" "🏪 Store view: `-store view <page no.>`\n\n🏪 Buy: `-buy <#pos | role_name>`\n\n💾 Inventory: `-inv | -inventory`\n\n🔵 De/activate: `-item <role_name>`" "inline" false)
-														) }}
+{{ $dbName := "CREDITS" }} {{/* Name of the Key of your DB that stores users currency amount */}}											) }}
 {{/* CONFIGURATION VARIABLES END */}}
 
 
@@ -88,6 +82,4 @@
 	{{ else }}
 		{{ sendMessage nil ( cembed "color" $red "title" ( print "Usage: -give <user> <amount>" ) ) }}
 	{{ end }}
-{{ else if eq (lower (index .Args 0) ) "-quack" }}
-	{{ sendMessage nil $helpMsg }}
 {{ end }}
