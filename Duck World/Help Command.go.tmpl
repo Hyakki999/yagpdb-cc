@@ -1,0 +1,62 @@
+{{/*
+	Help Command [Help messages for the Commands]
+
+	Recommended Trigger type: Regex with trigger `\A(?i)(-\s*|<@!?204255221017214977>\s*)(quack|q)(\s+|\z)`.
+
+	Copyright: 2021 Hyakki999
+	License: MIT
+	Repository: https://github.com/Hyakki999/YAGPDB-cc
+*/}}
+
+{{/* DON'T CHANGE ANYTHING */}}
+{{ $main_help := cembed "title" "Duck World" "description" "\\ℹ**️Type `-quack CommandName` to see the help for that specified command.\nE.g. `-q -wheel`.**" "color" 123456 "footer" (sdict "text" "Created by: Dr. Hyakkimaru#6020") "fields" (cslice (sdict "name" "Economy" "value" "**`Pick`, `$`, `Leaderboard`, `Timely`, `Give`**" "inline" false) (sdict "name" "Duck Shop" "value" "**`Shop`, `Shopadd`, `Shoprem`, `Inventory`, `Buy`, `Item`**" "inline" false) (sdict "name" "Games" "value" "**`WheelOfFortune`, `Slot`, `BlackJack`**" "inline" false)) }}
+{{ $pick := cembed "color" 7458112 "footer" (sdict "text" "Module: Economy") "fields" (cslice (sdict "name" "**`-pick`**" "value" "Picks the currency planted in this channel. You need to specify the password." "inline" true)  (sdict "name" "Usage" "value" "`-pick passwd`") ) }}
+{{ $currency := cembed "color" 7458112 "footer" (sdict "text" "Module: Economy") "fields" (cslice (sdict "name" "**`-$` / `-currency`**" "value" "Check how much currency a person has. (Defaults to yourself)" "inline" true)  (sdict "name" "Usage" "value" "`-$` or `-$ @SomeGuy`") ) }}
+{{ $leaderb := cembed "color" 7458112 "footer" (sdict "text" "Module: Economy") "fields" (cslice (sdict "name" "**`-lb` / `-leaderboard`**" "value" "Displays the bot's currency leaderboard." "inline" true)  (sdict "name" "Usage" "value" "`-lb`") ) }}
+{{ $give := cembed "color" 7458112 "footer" (sdict "text" "Module: Economy") "fields" (cslice (sdict "name" "**`-give`**" "value" "Give someone a certain amount of currency. You can specify the reason after the mention." "inline" true)  (sdict "name" "Usage" "value" "`-give 1 @SomeGuy` or `-give 5 @CootGurl Ur so pwetty`") ) }}
+{{ $timely := cembed "color" 7458112 "footer" (sdict "text" "Module: Economy") "fields" (cslice (sdict "name" "**`-timely`**" "value" "Use to claim your 'timely' currency." "inline" true)  (sdict "name" "Usage" "value" "`-timely`") ) }}
+{{ $shop := cembed "color" 7458112 "footer" (sdict "text" "Module: Duck Shop") "fields" (cslice (sdict "name" "**`-shop`**" "value" "Shows this server's duck shop. Paginated." "inline" true) (sdict "name" "Usage" "value" "`-shop` or `-shop 2`") ) }}
+{{ $shopadd := cembed "color" 7458112 "footer" (sdict "text" "Module: Duck Shop") "fields" (cslice (sdict "name" "**`-shopadd`**" "value" "Adds an item to the shop by specifying RoleName and price. You can only add roles for now." "inline" true) (sdict "name" "Requires" "value" "Administrator Server Permission") (sdict "name" "Usage" "value" "`-shopadd purple 400`") ) }}
+{{ $shoprem := cembed "color" 7458112 "footer" (sdict "text" "Module: Duck Shop") "fields" (cslice (sdict "name" "**`-shoprem` / `-shoprm`**" "value" "Removes an item from the shop by it's ID." "inline" true) (sdict "name" "Requires" "value" "Administrator Server Permission") (sdict "name" "Usage" "value" "`-shoprm 1`") ) }}
+{{ $buy := cembed "color" 7458112 "footer" (sdict "text" "Module: Duck Shop") "fields" (cslice (sdict "name" "**`-buy`**" "value" "Buys an item from the shop on a given index." "inline" true)  (sdict "name" "Usage" "value" "`-buy 2`") ) }}
+{{ $inv := cembed "color" 7458112 "footer" (sdict "text" "Module: Duck Shop") "fields" (cslice (sdict "name" "**`-inventory` / `-inv`**" "value" "Shows your inventory for this server." "inline" true)  (sdict "name" "Usage" "value" "`-inv`") ) }}
+{{ $item := cembed "color" 7458112 "footer" (sdict "text" "Module: Duck Shop") "fields" (cslice (sdict "name" "**`-item`**" "value" "Active or deactivate the roles from your inventory." "inline" true)  (sdict "name" "Usage" "value" "`-item purple`") ) }}
+{{ $wheel := cembed "color" 7458112 "footer" (sdict "text" "Module: Games") "fields" (cslice (sdict "name" "**`-wheeloffortune` / `-wheel`**" "value" "Bets a certain amount of currency on the wheel of fortune. Wheel can stop on one of many different multipliers. Won amount is rounded down to the nearest whole number." "inline" true) (sdict "name" "Usage" "value" "`-wheel 10`") ) }}
+{{ $blackJack := cembed "color" 7458112 "footer" (sdict "text" "Module: Games") "fields" (cslice (sdict "name" "**`-blackjack` / `-bj`**" "value" "Start or join a blackjack game. You must specify the amount you're betting. Use `hit` and `stand` commands to play. Dealer hits on soft 17 and wins draws." "inline" true) (sdict "name" "Usage" "value" "`-bj 10`") ) }}
+{{ $slot := cembed "color" 7458112 "footer" (sdict "text" "Module: Games") "fields" (cslice (sdict "name" "**`-slots` / `-slot`**" "value" "Play Pedro's slots. 1 second cooldown per user." "inline" true) (sdict "name" "Usage" "value" "`-slot 10`") ) }}
+
+{{ $embed := cembed }}
+{{ if .CmdArgs }}
+	{{ if eq (index .CmdArgs 0|lower) "-pick" "pick" }}
+		{{ $embed = $pick }}
+	{{ else if eq (index .CmdArgs 0|lower) "$" "-$" "currency" "-currency" }}
+		{{ $embed = $currency }}
+	{{ else if eq (index .CmdArgs 0|lower) "lb" "-lb" "leaderboard" "-leaderboard" }}
+		{{ $embed = $leaderb }}
+	{{ else if eq (index .CmdArgs 0|lower) "give" "-give" }}
+		{{ $embed = $give }}
+	{{ else if eq (index .CmdArgs 0|lower) "timely" "-timely" }}
+		{{ $embed = $timely }}
+	{{ else if eq (index .CmdArgs 0|lower) "shop" "-shop" }}
+		{{ $embed = $shop }}
+	{{ else if eq (index .CmdArgs 0|lower) "shopadd" "-shopadd" }}
+		{{ $embed = $shopadd }}
+	{{ else if eq (index .CmdArgs 0|lower) "shoprm" "-shoprm" "shoprem" "-shoprem" }}
+		{{ $embed = $shoprem }}
+	{{ else if eq (index .CmdArgs 0|lower) "buy" "-buy" }}
+		{{ $embed = $buy }}
+	{{ else if eq (index .CmdArgs 0|lower) "inv" "-inv" "inventory" "-inventory" }}
+		{{ $embed = $inv }}
+	{{ else if eq (index .CmdArgs 0|lower) "item" "-item" }}
+		{{ $embed = $item }}
+	{{ else if eq (index .CmdArgs 0|lower) "wheel" "-wheel" "wheeloffortune" "-wheeloffortune" }}
+		{{ $embed = $wheel }}
+	{{ else if eq (index .CmdArgs 0|lower) "bj" "-bj" "blackjack" "-blackjack" }}
+		{{ $embed = $blackJack }}
+	{{ else if eq (index .CmdArgs 0|lower) "slot" "-slot" "slots" "-slots" }}
+		{{ $embed = $slot }}
+	{{ end }}
+{{ else }}
+	{{ $embed = $main_help }}
+{{ end }}
+{{ sendMessage nil $embed }}
