@@ -1,7 +1,7 @@
 
 <h1 align="center"><img src="https://cdn.discordapp.com/avatars/596956753657069599/f913f1d1943ede689ade2f0cbdee4307.png" height=32px width=32px></img>&nbspDr. Hyakkimaru#6020</h1>
 
-> <p align="center">Hyakki's custom command for yagpdb users</p>
+> <p align="center">...................</p>
 
 # Table of Contents
 - [Custom Commands](#custom-command)
@@ -43,17 +43,11 @@ Repository: https://github.com/Hyakki999/YAGPDB-cc
 ```
 
 ---
-## Disclaimer
-
-I am not responsible for any difficulties caused by these custom commands. These commands are not guaranteed to be working, use them at your own risk.
-
----
 ## Need help?
 
-If you need help with these custom commands here, join my server where I can help you further.
+If you need help with these custom commands here, join the yagpdb's official server where I can help you further.
 
 - [YAGPDB Support Server](https://discord.gg/5uVyq2E)
-- [ONE](https://discord.gg/VGdS5Mg) MY SERVER
 
 You can also open an issue on the issue tracker if that's what you prefer.
 
