@@ -1,10 +1,3 @@
-# Table of Contents
-
-- [Duck Hunt](#duck-hunt)
-- [Adding These Custom Commands](#adding-these-custom-commands)
-- [Mini-games](#mini-games)
-
----
 ## Duck hunt
 As the name implies, this is a game where we hunt ducks.
 
