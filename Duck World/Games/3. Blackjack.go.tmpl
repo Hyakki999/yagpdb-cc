@@ -1,18 +1,17 @@
 {{/*
-	Name: Blackjack
-	Author: sponge#9968
-	Fixed by: ShadowNight#9025
-	Edited by: Dr. Hyakkimaru#6020
-	Recommended:
-	- Trigger type: regex
-	- Trigger: \A(?i)(-b(?:lack)?j(?:ack)? ?(\d+)|hit|stand)\z 
+    A Blackjack Game.
+
+    Author: sponge#9968
+    Fixed by: ShadowNight#9025
+    Edited by: Dr. Hyakkimaru#6020
+    Recommended Trigger type: regex with trigger: `\A(?i)(-b(?:lack)?j(?:ack)? ?(\d+)|hit|stand)\z`.
 */}}
 
 {{/* Configuration Variable */}}
 {{ $dbName := "CREDITS" }} {{/* Name of the Key of your DB that stores users currency amount */}}
 {{/* Configuration Variable Ends*/}}
 
-{{/* Do not change anything below */}}
+{{/* DON'T CHANGE ANYTHING*/}}
 {{ $emj := "🦆" }} {{$blank := "<:hidden:793052702405427250>"}}
 {{$cards := dict "<:redone:793000301069729822>" 1 "<:redtwo:793000347261468672>" 2 "<:redthree:793000387992354826>" 3 "<:redfour:793000431529492491>" 4 "<:redfive:793000460864716841>" 5 "<:redsix:793000497794646026>" 6 "<:redseven:793000530909069352>" 7 "<:redeigth:793000562496110613>" 8 "<:rednine:793000596730282034>" 9 "<:redten:793000639675498536>" 10 "<:redjoker:793000683506630706>" 10 "<:redqueen:793000947395067904>" 10 "<:redking:793000980546322472>" 10 "<:redbiga:792999968766951424>" (index (cslice 11 1) (randInt 0 2)) "<:blackone:792998959328133130>" 1 "<:blacktwo:792998991729131540>" 2 "<:blackthree:792999028975337502>" 3 "<:blackfour:792999065252134962>" 4 "<:blackfive:792999102417207338>" 5 "<:blacksix:792999138614706217>" 6 "<:blackseven:792999170566782976>" 7 "<:blackeigth:792999215672066048>" 8 "<:blacknine:792999583126126612>" 9 "<:blackten:792999623140442132>" 10 "<:blackjoker:792999664693411840>" 10 "<:blackking:792999762995052575>" 10 "<:blackqueen:792999713321385994>" 10 "<:blackbiga:792998918743916585>" (index (cslice 11 1) (randInt 0 2))}}
 {{$yellow := 0xe8ff1c}} {{$green := 0x2eff17}} {{$red := 0xff1717}}
