@@ -1,0 +1,39 @@
+{{/*
+    Name: Leaderboard
+    Author: Dr. Hyakkimaru#6020
+    Usage: `-leaderboard (page)`
+    Trigger Type: Regex
+    Trigger: `\A\-(?i)l(eader)?b(oard)?`
+
+    Copyright: 2021 Hyakki999
+    License: MIT
+    Repository: https://github.com/Hyakki999/YAGPDB-cc
+
+*/}}
+
+{{/* CONFIGURATION VARIABLES */}}
+{{  $dbName := "CREDITS"  }} {{/* Name of the Key of your DB that stores users currency amount */}}
+
+{{/* Do not change anything below */}}
+{{ $page := 1 }} {{ with reFind `\d+` (joinStr " " .CmdArgs) }} {{ $page = index . 0 | toInt }} {{ if lt $page 1 }} {{ $page = 1 }} {{ end }} {{ end }} 
+{{ $skip := mult (sub $page 1) 9 }} {{ $count := 1 }}
+{{ $lb := dbTopEntries $dbName 9 $skip }} {{ $board := cslice }}
+
+{{ range $lb }}
+{{ $name := printf "#%d · %s" $count .User.Username }}
+{{ $bal := print .Value " 🦆" }}
+{{ $count = add $count 1 }}
+{{ $board = $board.Append (sdict "name" $name "value" $bal "inline" true) }}
+{{ else }}
+There's no one on the leaderboard!
+{{ end }}
+
+{{ if $board }}
+{{
+	sendMessage nil (cembed
+	"title" "🦆 Leaderboard"
+	"fields" $board
+	"footer" (sdict "text" (print "Page: " $page)) 
+	"color" (randInt 0 16777216)
+) }}
+{{ end }}
