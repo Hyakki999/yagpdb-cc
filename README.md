@@ -5,7 +5,7 @@
 
 # Table of Contents
 - [Custom Commands](#custom-command)
-- [Licence](#licence)
+- [license](#license)
 - [Need help](#need-help?)
 
 
@@ -24,17 +24,16 @@ In YAGPDB you can code to make additional commands that isn't built-in.
   - [YAGPDB cc's](https://github.com/yagpdb-cc/yagpdb-cc)
   - [wolf's](https://github.com/TheHDCrafter/yagpdb-cc)
   - [Pedro's](https://github.com/Pedro-Pessoa/yagpdb-cc/tree/Tickets/tickets)
-  - [DZ](https://github.com/DZ-TM/Yagpdb.xyz)
-  - [sponge](https://github.com/Spongerooski/yagpdb-cc)
+  - [sponge's](https://github.com/Spongerooski/yagpdb-cc)
 </details>
 
 ---
-## Licence:  
- - [The full licence](https://github.com/Hyakki999/YAGPDB-cc/blob/main/LICENSE)
+## license:  
+ - [The full license](https://github.com/Hyakki999/YAGPDB-cc/blob/main/LICENSE)
 
-Include [this small licence](#small-licence-text) in the code if it is found there.  
+Include [this small license](#small-license-text) in the code if it is found there.  
 
-#### Small licence text:
+#### Small license text:
 ```
 Copyright: 2021 Hyakki999
 License: MIT
