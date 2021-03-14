@@ -3,21 +3,19 @@
 	Author: Dr. Hyakkimaru#6020
 	
 	Recommended:
-	- Trigger Type: Starts with
-	- Trigger: `-wheel`
+	- Trigger Type: Regex
+	- Trigger: `\A\-(?i)wheel(offortune)?`
 
     Copyright: 2021 Hyakki999
     License: MIT
     Repository: https://github.com/Hyakki999/YAGPDB-cc
-
 */}}
 
 {{/* CONFIGURATION VARIABLES */}}
 {{ $dbName := "CREDITS" }} {{/* Name of the Key of your DB that stores users currency amount */}}
-{{ $channel := 1277555185387826827 }} {{/* The channel_id where users can play */}}
 {{ $limit := " insufficient 🦆" }} {{/* Error message when user doesn't have enough credits to place bet */}}
 {{ $bb1 := " you have to bet at least 1 🦆" }} {{/* Error message when user try to bet less than 1 🦆 */}}
-{{ $helpText := "-wheel <amount>\nFor example: **-wheel 10**\nThis way you would be betting 10 🦆." }} {{/* Your helper text */}}
+{{ $helpText := "-wheel <amount>\nFor example: **-wheel 10**\nThis way you would be betting 10 🦆." }} {{/* Your help text */}}
 {{/* CONFIGURATION VARIABLES ENDS */}}
 
 {{/* Do not change anything below */}}	
@@ -28,51 +26,45 @@
 	{{ $pos = (index (shuffle (cslice 1.2 2.4 1.7 1.5)) 0) }}
 {{ end }}
 
-{{ $point := $pos }}
 {{ $arrow := " " }}
-{{ if eq $point 0.1 }}
+{{ if eq $pos 0.1 }}
 	{{ $arrow = `\↙️` }}
-{{ else if eq $point 0.3 }}
+{{ else if eq $pos 0.3 }}
 	{{ $arrow = "↓" }}
-{{ else if eq $point 0.5 }}
+{{ else if eq $pos 0.5 }}
 	{{ $arrow = `\↘️` }}
-{{ else if eq $point 1.2 }}
+{{ else if eq $pos 1.2 }}
 	{{ $arrow = "→" }}
-{{ else if eq $point 2.4 }}
+{{ else if eq $pos 2.4 }}
 	{{ $arrow = `\↗️` }}
-{{ else if eq $point 1.7 }}
+{{ else if eq $pos 1.7 }}
 	{{ $arrow = "↑" }}
-{{ else if eq $point 1.5 }}
+{{ else if eq $pos 1.5 }}
 	{{ $arrow = `\↖️` }}
-{{ else if eq $point 0.2 }}
+{{ else if eq $pos 0.2 }}
 	{{ $arrow = "←" }}
 {{ end }}
      
-{{ $fh := `🦆
-
-   『1.5』   『1.7』   『2.4』
-
-『0.2』      ` }}
-{{ $sh := `      『1.2』
-
-     『0.1』   『0.3』   『0.5』
-     ` }}
+{{ $fh := "🦆\n\n   『1.5』   『1.7』   『2.4』\n\n『0.2』      " }}
+{{ $sh := "      『1.2』\n\n     『0.1』   『0.3』   『0.5』" }}
 {{ $bal := toInt (dbGet .User.ID $dbName).Value }}
 {{ $red := 0xff2627 }}
 {{ $gre := 0x76ff03 }}
-{{ if eq .Channel.ID $channel }}
-	{{ if .CmdArgs}}
-		{{ $bet := toInt ( index .CmdArgs 0 ) }}
-		{{ if ge $bet 1 }}
-			{{ if ge $bal $bet }}
-				{{ $silent := dbIncr .User.ID $dbName ( mult -1 $bet ) }}
-				{{ $amount := toInt ( round ( mult ( toFloat $bet ) $point ) ) }}
-				{{ $silent := dbIncr .User.ID $dbName $amount }}
-				{{ sendMessage nil ( cembed "color" $gre "title" ( print .User.String " won: " $amount $fh $arrow $sh ) ) }}
-			{{ else }}
-				{{ sendMessage nil ( cembed "color" $red "title" ( print .User.String $limit ) ) }} {{ end }}
+
+{{ if .CmdArgs}}
+	{{ $bet := index .CmdArgs 0 | toInt }}
+	{{ if ge $bet 1 }}
+		{{ if ge $bal $bet }}
+			{{ $silent := dbIncr .User.ID $dbName ( mult -1 $bet ) }}
+			{{ $amount := toInt ( round ( mult ( toFloat $bet ) $pos ) ) }}
+			{{ $silent := dbIncr .User.ID $dbName $amount }}
+			{{ sendMessage nil ( cembed "color" $gre "title" ( print .User.String " won: " $amount $fh $arrow $sh ) ) }}
 		{{ else }}
-			{{ sendMessage nil ( cembed "color" $red "title" ( print .User.String $bb1 ) ) }} {{ end }}
+		{{ sendMessage nil ( cembed "color" $red "title" ( print .User.String $limit ) ) }}
+		{{ end }}
 	{{ else }}
-		{{ sendMessage nil ( cembed "color" $red "title" ( print "Usage: \n" $helpText ) ) }} {{ end }}
+	{{ sendMessage nil ( cembed "color" $red "title" ( print .User.String $bb1 ) ) }}
+	{{ end }}
+{{ else }}
+{{ sendMessage nil ( cembed "color" $red "title" ( print "Usage: \n" $helpText ) ) }}
 {{ end }}
