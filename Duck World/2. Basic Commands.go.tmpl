@@ -17,6 +17,7 @@
 {{/* Do not change anything below */}}
 {{ $red := 0xff2627 }}
 {{ $gre := 0x76ff03 }}
+{{ $bal := (dbGet .User.ID $dbName).Value|toInt }}
 
 {{ if eq (lower (index .Args 0) ) "-timely" }}
 	{{ if (dbGet .User.ID "timely") }}
@@ -36,12 +37,22 @@
 	{{ dbSetExpire .User.ID "timely" "d" 86400 }}
 	{{end}}
 	
-{{else if eq (index .Args 0) "-$"}}
+{{else if eq (index .Args 0) "-$" "-currency" }}
+	{{ with .Message.Mentions }}
+	{{ $user := (index . 0).Username }}
+	{{ $bal = (dbGet (index . 0).ID $dbName).Value|toInt }}
 	{{
 		sendMessage nil (cembed
 		"color" $gre
-		"title" (print .User.String " has " (dbGet .User.ID $dbName).Value "🦆")
+		"title" (print $user " has " $bal "🦆")
 	) }}
+	{{ else }}
+	{{
+		sendMessage nil (cembed
+		"color" $gre
+		"title" (print $.User.Username " has " $bal "🦆")
+	) }}
+	{{ end }}
 
 {{ else if eq (lower (index .Args 0) ) "-pick" }}
 	{{ if (dbGet 0 "quack") }}
@@ -76,11 +87,10 @@
 	{{ $receiver = (index .Message.Mentions 0 ).ID }}
 	{{end}}
 	{{ $gift := toInt ( index .CmdArgs 1 ) }}
-	{{ $sbal := toInt ( (dbGet .User.ID $dbName ).Value) }}
 
 	{{ if ne $sender $receiver }}
 		{{ if ge $gift 1 }}
-			{{ if ge $sbal $gift }}
+			{{ if ge $bal $gift }}
 			{{ $silent1 := dbIncr $sender $dbName (mult -1 $gift) }}
 			{{ $silent2 := dbIncr $receiver $dbName $gift }}
 			{{ sendMessage nil (cembed "color" $gre "title" (print .User.String " gifted " $gift "🦆 to " (userArg $receiver).String )) }}
