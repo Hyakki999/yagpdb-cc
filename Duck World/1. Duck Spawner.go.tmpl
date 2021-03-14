@@ -1,5 +1,5 @@
 {{/*
-	Name: Duck spawner 
+    Name: Duck spawner 
     Author: Dr. Hyakkimaru#6020
     Trigger Type: Regex
     Trigger: `\A`
@@ -10,10 +10,10 @@
 
 */}}
 
+{{/* Configuration Variable */}}
 {{ $channel := 692684680939700234 }} {{/* Change the number with the channel_ID where ducks will spawn */}}
 
 {{/* Do not change anything brlow */}}
-
 {{ if not (dbGet 0 "quack") }}
 {{ if not .ExecData}}
 {{ execCC .CCID $channel 100 "data" }}
